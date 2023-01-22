@@ -4,27 +4,31 @@ local function validate()
 	if sdk.path and sdk.path:len() > 0 then
 		local searchPath = sdk.path .. sdk.libDir
 		
+		local nr               = 0
 		local missingLibs      = {}
 		local missingDebugLibs = false
 		local message          = ""
 		for _, v in ipairs(sdk.requiredSDKLibs.all) do
 			if not common:hasLib(v, searchPath) then
 				missingLibs[v] = true
+				nr = nr + 1
 			end
 		end
 		for _, v in ipairs(sdk.requiredSDKLibs.dist) do
 			if not common:hasLib(v, searchPath) then
 				missingLibs[v] = true
+				nr = nr + 1
 			end
 		end
 		for _, v in ipairs(sdk.requiredSDKLibs.debug) do
 			if not common:hasLib(v, searchPath) then
 				missingLibs[v]   = true
 				missingDebugLibs = true
+				nr = nr + 1
 			end
 		end
 		
-		if #missingLibs > 0 then
+		if nr > 0 then
 			message = "vulkan-sdk package error: Missing required sdk libraries.\nIf you think this is an issue with the premake-sdk package, please open an issue on github."
 		end
 		
@@ -32,7 +36,7 @@ local function validate()
 			message = message .. "\nMissing required debug sdk libraries.\nIf you haven't installed the \"Shader Toolchain Debug Symbols - 64 bit\" sdk component, go add that in the maintenancetool.exe in the sdk."
 		end
 		
-		if #missingLibs > 0 then
+		if nr > 0 then
 			for k, v in pairs(missingLibs) do
 				message = message .. "\n  " .. k
 			end
