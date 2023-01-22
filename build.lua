@@ -7,17 +7,17 @@ local function validate()
 		local missingLibs      = {}
 		local missingDebugLibs = false
 		local message          = ""
-		for _, v in ipairs(self.requiredSDKLibs.all) do
+		for _, v in ipairs(sdk.requiredSDKLibs.all) do
 			if not common:hasLib(v, searchPath) then
 				missingLibs[v] = true
 			end
 		end
-		for _, v in ipairs(self.requiredSDKLibs.dist) do
+		for _, v in ipairs(sdk.requiredSDKLibs.dist) do
 			if not common:hasLib(v, searchPath) then
 				missingLibs[v] = true
 			end
 		end
-		for _, v in ipairs(self.requiredSDKLibs.debug) do
+		for _, v in ipairs(sdk.requiredSDKLibs.debug) do
 			if not common:hasLib(v, searchPath) then
 				missingLibs[v]   = true
 				missingDebugLibs = true
