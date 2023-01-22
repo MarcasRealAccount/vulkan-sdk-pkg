@@ -42,9 +42,11 @@ local function validate()
 			term.pushColor(term.errorColor)
 			print(message)
 			term.popColor()
+			
+			return false
 		end
 		
-		return false
+		return true
 	else
 		message = "vulkan-sdk package error: It doesn't appear like you have installed the vulkan sdk.\nPlease go to https://vulkan.lunarg.com/sdk/home and download the sdk installer for your os.\nAlso ensure the VULKAN_SDK environment variable (system one is best, but local is fine) is set to the path to your sdk install (on unix oses you can run the setup-env.sh script with 'source' to add it automatically, tho you will have to cd in and out on macosx)."
 		term.pushColor(term.errorColor)
@@ -62,7 +64,7 @@ end
 
 while not validate() do
 	if sdk.path == "Q" then
-		error("Quit")
+		error("Quit", 0)
 	end
 end
 
