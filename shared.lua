@@ -9,8 +9,8 @@ local isWindows = common.host == "windows"
 
 local vulkansdk = {
 	path       = path.translate(_OPTIONS["vulkan-sdk"], "/"),
-	includeDir = iif(isWindows, "/include/", "/Include/"),
-	libDir     = iif(isWindows, "/lib/", "/Lib/")
+	includeDir = iif(isWindows, "/Include/", "/include/"),
+	libDir     = iif(isWindows, "/Lib/", "/lib/")
 }
 
 function vulkansdk:addDebuggableLib(libs, lib)
