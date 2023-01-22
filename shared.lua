@@ -38,7 +38,7 @@ function vulkansdk:getRequiredSDKLibraries()
 	end
 	
 	if _PKG_ARGS["shaderc"] == "true" then
-		addDebuggableLib(self.requiredSDKLibs, "shaderc_combined")
+		self:addDebuggableLib(self.requiredSDKLibs, "shaderc_combined")
 	end
 end
 
