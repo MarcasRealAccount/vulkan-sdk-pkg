@@ -1,5 +1,7 @@
 local sdk = require("shared")
 
+local attempts = 0
+
 local function validate()
 	if sdk.path and sdk.path:len() > 0 then
 		local searchPath = sdk.path .. sdk.libDir
@@ -66,10 +68,11 @@ local function validate()
 	return true
 end
 
-while not validate() do
+while attempts < 3 and not validate() do
 	if sdk.path == "Q" then
 		error("Quit", 0)
 	end
+	attempts = attempts + 1
 end
 
 return true
