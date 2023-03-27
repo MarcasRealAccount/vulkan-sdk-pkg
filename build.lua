@@ -39,6 +39,7 @@ local function validate()
 		end
 		
 		if nr > 0 then
+			message = message .. "\nMissing Libs:"
 			for k, v in pairs(missingLibs) do
 				message = message .. "\n  " .. k
 			end
@@ -59,9 +60,6 @@ local function validate()
 		print(message)
 		term.popColor()
 		
-		io.write("Please write the full sdk path ('Q' to quit): ")
-		sdk.path = io.read()
-		
 		return false
 	end
 	
@@ -69,6 +67,9 @@ local function validate()
 end
 
 while attempts < 3 and not validate() do
+	io.write("Please write the full sdk path ('Q' to quit): ")
+	sdk.path = io.read()
+	
 	if sdk.path == "Q" then
 		error("Quit", 0)
 	end
