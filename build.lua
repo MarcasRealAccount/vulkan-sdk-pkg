@@ -6,10 +6,11 @@ local function validate()
 	if sdk.path and sdk.path:len() > 0 then
 		local searchPath = sdk.path .. sdk.libDir
 		
-		local nr               = 0
-		local missingLibs      = {}
-		local missingDebugLibs = false
-		local message          = ""
+		local nr                 = 0
+		local missingLibs        = {}
+		local missingDynamicLibs = {}
+		local missingDebugLibs   = false
+		local message            = ""
 		for _, v in ipairs(sdk.requiredSDKLibs.all) do
 			if not common:hasLib(v, searchPath) then
 				missingLibs[v] = true
@@ -29,6 +30,25 @@ local function validate()
 				nr = nr + 1
 			end
 		end
+		for _, v in ipairs(sdk.requiredSDKDynamicLibs.all) do
+			if not common:hasSharedLib(v, searchPath) then
+				missingDynamicLibs[v] = true
+				nr = nr + 1
+			end
+		end
+		for _, v in ipairs(sdk.requiredSDKDynamicLibs.dist) do
+			if not common:hasSharedLib(v, searchPath) then
+				missingDynamicLibs[v] = true
+				nr = nr + 1
+			end
+		end
+		for _, v in ipairs(sdk.requiredSDKDynamicLibs.debug) do
+			if not common:hasSharedLib(v, searchPath) then
+				missingDynamicLibs[v] = true
+				missingDebugLibs      = true
+				nr = nr + 1
+			end
+		end
 		
 		if nr > 0 then
 			message = "vulkan-sdk package error: Missing required sdk libraries.\nIf you think this is an issue with the premake-sdk package, please open an issue on github."
@@ -40,8 +60,11 @@ local function validate()
 		
 		if nr > 0 then
 			message = message .. "\nMissing Libs:"
-			for k, v in pairs(missingLibs) do
+			for k, _ in pairs(missingLibs) do
 				message = message .. "\n  " .. k
+			end
+			for k, _ in pairs(missingDynamicLibs) do
+				message = message .. "\n" .. k
 			end
 		end
 		

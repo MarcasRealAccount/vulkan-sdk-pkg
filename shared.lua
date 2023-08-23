@@ -29,8 +29,18 @@ function vulkansdk:getRequiredSDKLibraries()
 			dist  = {},
 			debug = {}
 		}
+		self.requiredSDKDynamicLibs = {
+			all   = {},
+			dist  = {},
+			debug = {}
+		}
 	else
 		self.requiredSDKLibs = {
+			all   = {},
+			dist  = {},
+			debug = {}
+		}
+		self.requiredSDKDynamicLibs = {
 			all   = { "vulkan" },
 			dist  = {},
 			debug = {}
