@@ -1,4 +1,5 @@
 local sdk = require("shared")
+sdk:getRequiredSDKLibraries()
 
 local attempts = 0
 
