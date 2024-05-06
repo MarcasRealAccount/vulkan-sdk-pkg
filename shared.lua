@@ -52,6 +52,4 @@ function vulkansdk:getRequiredSDKLibraries()
 	end
 end
 
-vulkansdk:getRequiredSDKLibraries()
-
 return vulkansdk
