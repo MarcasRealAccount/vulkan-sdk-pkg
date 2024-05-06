@@ -1,4 +1,5 @@
 local sdk = require("shared")
+sdk:getRequiredSDKLibraries()
 
 externalincludedirs(sdk.path .. sdk.includeDir)
 
